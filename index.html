@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayfair Transfer Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Bayfair Transfer Tool</h1>
+
+    <div class="instructions">
+        <p>Choose the destination branch, enter a description, then scan or enter barcodes. Click "Save to .dat" when done.</p>
+    </div>
+
+    <div class="toggle-container">
+        <div class="toggle">
+            <button id="bayBtn" class="toggle-btn active" onclick="confirmBranchSwitch('BAY')">TO BAY</button>
+            <button id="bstBtn" class="toggle-btn" onclick="confirmBranchSwitch('BST')">TO BST</button>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <input 
+            type="text" 
+            id="transferDescription" 
+            placeholder="What are you transferring?" 
+            autocomplete="off"
+        >
+    </div>
+
+    <div class="table-container">
+        <table id="barcodeTable">
+            <thead>
+                <tr>
+                    <th>Barcode</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="barcodeList">
+                <tr class="scan-row">
+                    <td colspan="2">
+                        <input 
+                            type="text" 
+                            id="barcodeInput" 
+                            placeholder="Scan or Enter Barcode" 
+                            onkeypress="addBarcode(event)" 
+                            autocomplete="off"
+                        >
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-primary" onclick="confirmSave()">Save to .dat</button>
+        <button class="btn btn-danger" onclick="confirmClear()">Clear All</button>
+    </div>
+
+    <div class="history-container">
+        <div class="history-title">Today's Transfers</div>
+        <div id="historyList"></div>
+    </div>
+
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modal-confirm" class="btn btn-primary">OK</button>
+                <button id="modal-cancel" class="btn btn-danger" style="display: none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
