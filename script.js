@@ -159,6 +159,32 @@ async function confirmSave() {
     }
 }
 
+// Instructions handling
+function handleInstructions() {
+    const instructions = document.getElementById('instructions');
+    const showInstructionsBtn = document.getElementById('showInstructions');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // Check if user has seen instructions before
+    const hasSeenInstructions = localStorage.getItem('hasSeenInstructions');
+
+    // Show instructions if it's the first visit
+    if (!hasSeenInstructions) {
+        instructions.style.display = 'block';
+    }
+
+    // Close button handler
+    closeBtn.addEventListener('click', () => {
+        instructions.style.display = 'none';
+        localStorage.setItem('hasSeenInstructions', 'true');
+    });
+
+    // Show instructions button handler
+    showInstructionsBtn.addEventListener('click', () => {
+        instructions.style.display = 'block';
+    });
+}
+
 function formatFileName(description) {
     const now = new Date();
     const date = now.toISOString().split('T')[0];
@@ -359,6 +385,7 @@ window.addEventListener("load", () => {
     cleanupOldData();
     loadCachedTransfers();
     loadHistory();
+    handleInstructions();
     if (!document.getElementById("transferDescription").value) {
         document.getElementById("transferDescription").focus();
     }

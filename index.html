@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bayfair Transfer Tool</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 </head>
 <body>
     <h1>Bayfair Transfer Tool</h1>
 
-    <div class="instructions">
-        <p>Choose the destination branch, enter a description, then scan or enter barcodes. Click "Save to .dat" when done.</p>
+    <div id="instructions" class="instructions">
+        <button class="close-btn">&times;</button>
+        <p>Choose the destination branch, enter a description, then scan or enter barcodes. Click "Save to file" when done.</p>
+        <p>When you have your file, open "Back Office", select "Transfer", select "Transfer via PDE", upload the file, select the branch you're transferring from, enter a description. Click "start" when ready.</p>
     </div>
 
     <div class="toggle-container">
@@ -62,6 +66,12 @@
         <div class="history-title">Today's Transfers</div>
         <div id="historyList"></div>
     </div>
+
+    <footer class="footer">
+        <button id="showInstructions" class="link-button">Show instructions</button>
+        <img class="stirling-logo" src="/White-Transparent-Logo-14 2.png" alt="Stirling Sports Logo">
+        <a class="link-button" href="https://www.prestonbroad.com" target="_blank">Created by Preston Broad</a>
+    </footer>
 
     <div id="modal" class="modal" style="display: none;">
         <div class="modal-content">
