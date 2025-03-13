@@ -7,20 +7,55 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <h1>Bayfair Transfer Tool</h1>
 
     <div id="instructions" class="instructions">
-        <button class="close-btn">&times;</button>
-        <p>Choose the destination branch, enter a description, then scan or enter barcodes. Click "Save file" when done.</p>
-        <p>When you have your file, open "Counter Intelligince Office", select "Transfer", select "Enter or Modify a Transfer", select "Via PDE", upload the file, select the branch you're transferring from, enter a description. Click "Start" when ready.</p>
+        <button class="close-btn"><span class="material-icons">close</span></button>
+        <p>Select the source (FROM) and destination (TO) branches from the dropdown menus, enter a description, then scan or enter barcodes. Click "Save file" when done.</p>
+        <p>When you have your file, open "Counter Intelligence Office", select "Transfer", select "Enter or Modify a Transfer", select "Via PDE", upload the file, select the branch you're transferring from, enter a description. Click "Start" when ready.</p>
     </div>
 
-    <div class="toggle-container">
-        <div class="toggle">
-            <button id="bayBtn" class="toggle-btn active" onclick="confirmBranchSwitch('BAY')">TO BAY</button>
-            <button id="bstBtn" class="toggle-btn" onclick="confirmBranchSwitch('BST')">TO BST</button>
+    <div id="updateAnnouncement" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>New Update Available! (v1.1.0)</h2>
+            <p>We've added new features to the Bayfair Transfer Tool:</p>
+            <ul>
+                <li>Added a barcode counter to track how many items you've scanned in real-time</li>
+                <li>Improved code organization with modular JavaScript files for better performance</li>
+                <li>Improved overall application stability and maintainability</li>
+                <li>Support for Bayfair Pop-up (BPU) branch</li>
+                <li>Source and destination branch selection dropdowns</li>
+                <li>Google Material Icons for a more modern interface</li>
+                <li>Consistent design system with standardized spacing and styling</li>
+                <li>Improved visual distinction between informational elements and action buttons</li>
+            </ul>
+            <div class="modal-buttons">
+                <button id="update-confirm" class="btn btn-primary">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="branch-selection-container">
+        <div class="branch-selection">
+            <div class="branch-label">FROM:</div>
+            <select id="fromBranchSelect" onchange="updateBranchSelection('from')">
+                <option value="BST">BST (Bayfair Storage)</option>
+                <option value="BAY">BAY (Bayfair)</option>
+                <option value="BPU">BPU (Bayfair Pop-up)</option>
+            </select>
+            
+            <div class="transfer-arrow"><span class="material-icons">arrow_forward</span></div>
+            
+            <div class="branch-label">TO:</div>
+            <select id="toBranchSelect" onchange="updateBranchSelection('to')">
+                <option value="BAY">BAY (Bayfair)</option>
+                <option value="BST">BST (Bayfair Storage)</option>
+                <option value="BPU">BPU (Bayfair Pop-up)</option>
+            </select>
         </div>
     </div>
 
@@ -34,6 +69,12 @@
     </div>
 
     <div class="table-container">
+        <div class="barcode-counter-container">
+            <div class="barcode-counter">
+                <span class="material-icons">qr_code_scanner</span>
+                <span id="barcodeCounter">0</span> items scanned
+            </div>
+        </div>
         <table id="barcodeTable">
             <thead>
                 <tr>
@@ -58,8 +99,12 @@
     </div>
 
     <div class="btn-container">
-        <button class="btn btn-primary" onclick="confirmSave()">Save file</button>
-        <button class="btn btn-danger" onclick="confirmClear()">Clear all</button>
+        <button class="btn btn-primary" onclick="confirmSave()">
+            <span class="material-icons">save</span> Save file
+        </button>
+        <button class="btn btn-danger" onclick="confirmClear()">
+            <span class="material-icons">delete_sweep</span> Clear all
+        </button>
     </div>
 
     <div class="history-container">
@@ -68,8 +113,15 @@
     </div>
 
     <footer class="footer">
-        <button id="showInstructions" class="link-button">Show instructions</button>
-        <img class="stirling-logo" src="/White-Transparent-Logo-14 2.png" alt="Stirling Sports Logo">
+        <div class="footer-links">
+            <button id="showInstructions" class="link-button">
+                <span class="material-icons">help_outline</span> Show instructions
+            </button>
+            <button id="showVersionHistory" class="link-button">
+                <span class="material-icons">history</span> Version history
+            </button>
+        </div>
+        <img class="stirling-logo" src="White-Transparent-Logo-14 2.png" alt="Stirling Sports Logo">
         <a class="link-button" href="https://www.prestonbroad.com" target="_blank">Created by Preston Broad</a>
     </footer>
 
@@ -84,6 +136,41 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Version History Modal -->
+    <div id="versionHistoryModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Version History</h2>
+            <div class="version-item">
+                <h3>v1.1.0 (Current)</h3>
+                <ul>
+                    <li>Added barcode counter to track scanned items in real-time</li>
+                    <li>Improved code organization with modular JavaScript files</li>
+                    <li>Added support for Bayfair Pop-up (BPU) branch</li>
+                    <li>Improved branch selection with source and destination dropdowns</li>
+                    <li>Integrated Google Material Icons for a more modern interface</li>
+                    <li>Added visual indicators for actions and navigation</li>
+                    <li>Implemented consistent design system with standardized spacing</li>
+                    <li>Improved visual distinction between informational elements and action buttons</li>
+                </ul>
+            </div>
+            <div class="version-item">
+                <h3>v1.0.0</h3>
+                <ul>
+                    <li>Initial release with support for transfers between BAY and BST</li>
+                    <li>Basic barcode scanning and management</li>
+                    <li>Transfer file generation in KUDOS V2 format</li>
+                </ul>
+            </div>
+            <div class="modal-buttons">
+                <button id="version-history-close" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load JavaScript files in the correct order -->
+    <script src="core.js"></script>
+    <script src="ui.js"></script>
+    <script src="storage.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
